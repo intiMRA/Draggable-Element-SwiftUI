@@ -1,0 +1,18 @@
+{
+  "" : {
+    "dependencies" : "/Users/ialbuquerque/projects/ios/personal/DragNDrop/DerivedData/DragNDrop/Index.noindex/Build/Intermediates.noindex/DragNDrop.build/Debug-iphoneos/DragNDrop.build/Objects-normal/arm64/DragNDrop-master.d",
+    "diagnostics" : "/Users/ialbuquerque/projects/ios/personal/DragNDrop/DerivedData/DragNDrop/Index.noindex/Build/Intermediates.noindex/DragNDrop.build/Debug-iphoneos/DragNDrop.build/Objects-normal/arm64/DragNDrop-master.dia",
+    "emit-module-dependencies" : "/Users/ialbuquerque/projects/ios/personal/DragNDrop/DerivedData/DragNDrop/Index.noindex/Build/Intermediates.noindex/DragNDrop.build/Debug-iphoneos/DragNDrop.build/Objects-normal/arm64/DragNDrop-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/ialbuquerque/projects/ios/personal/DragNDrop/DerivedData/DragNDrop/Index.noindex/Build/Intermediates.noindex/DragNDrop.build/Debug-iphoneos/DragNDrop.build/Objects-normal/arm64/DragNDrop-master-emit-module.dia",
+    "swift-dependencies" : "/Users/ialbuquerque/projects/ios/personal/DragNDrop/DerivedData/DragNDrop/Index.noindex/Build/Intermediates.noindex/DragNDrop.build/Debug-iphoneos/DragNDrop.build/Objects-normal/arm64/DragNDrop-master.swiftdeps"
+  },
+  "/Users/ialbuquerque/projects/ios/personal/DragNDrop/DerivedData/DragNDrop/Index.noindex/Build/Intermediates.noindex/DragNDrop.build/Debug-iphoneos/DragNDrop.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+
+  },
+  "/Users/ialbuquerque/projects/ios/personal/DragNDrop/DragNDrop/ContentView.swift" : {
+
+  },
+  "/Users/ialbuquerque/projects/ios/personal/DragNDrop/DragNDrop/DragNDropApp.swift" : {
+
+  }
+}
