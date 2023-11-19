@@ -37,12 +37,51 @@ struct ContentView: View {
                             self.selectedItem = fruit
                             return MyItemProvider(selectedItem: $selectedItem, draggableItems: $draggableItems, originalItems: draggableItems)
                         })
-                        .onDrop(of: [.text], delegate: MyDropDelegate(selectedItem: $selectedItem, draggableItems: $draggableItems, destinationItem: fruit))
+                        .onDrop(of: [.text], delegate: MyDropDelegate(selectedItem: $selectedItem, draggableItems: $draggableItems, droppedFruit: $droppedFruit, destinationItem: fruit))
                 }
             }
-            .animation(.easeIn, value: draggableItems)
+            fruitBowl
+                .onDrop(of: [.text], delegate: MyDropDelegate(selectedItem: $selectedItem, draggableItems: $draggableItems, droppedFruit: $droppedFruit, destinationItem: nil, destinationIsBowl: true))
         }
+        .animation(.easeIn, value: draggableItems)
         .padding()
+    }
+    
+    
+    @ViewBuilder
+    var fruitBowl: some View {
+        let orange = droppedFruit.firstIndex(where: { $0 == .orange })
+        let grape = droppedFruit.firstIndex(where: { $0 == .grape })
+        let pear = droppedFruit.firstIndex(where: { $0 == .pear })
+        Group {
+            switch(orange, grape, pear) {
+            case (.none, .none , .none):
+                Image(.fruitBowl)
+                    .resizable()
+            case (.some, .none, .none):
+                Image(.fruitBowlOrange)
+                    .resizable()
+            case (.none, .some, .none):
+                Image(.fruitBowlGrape)
+                    .resizable()
+            case (.none, .none, .some):
+                Image(.fruitBowlPear)
+                    .resizable()
+            case (.some, .some, .none):
+                Image(.fruitBowlOrangeGrape)
+                    .resizable()
+            case (.some, .none, .some):
+                Image(.fruitBowlOrangePear)
+                    .resizable()
+            case (.none, .some, .some):
+                Image(.fruitBowlGrapePear)
+                    .resizable()
+            case (.some, .some, .some):
+                Image(.fruitBowlAll)
+                    .resizable()
+            }
+        }
+        .frame(width: 100, height: 100)
     }
 }
 
@@ -61,6 +100,7 @@ class MyItemProvider: NSItemProvider {
     deinit {
         if self.selectedItem != nil {
             self.draggableItems = self.originalItems
+            self.selectedItem = nil
         }
     }
 }
@@ -68,21 +108,29 @@ class MyItemProvider: NSItemProvider {
 class MyDropDelegate: DropDelegate {
     @Binding var selectedItem: Fruits?
     @Binding var draggableItems: [Fruits]
-    let destinationItem: Fruits
+    @Binding var droppedFruit: [Fruits]
+    let destinationItem: Fruits?
+    let destinationIsBowl: Bool
     
-    init(selectedItem: Binding<Fruits?>, draggableItems: Binding<[Fruits]>, destinationItem: Fruits) {
+    init(selectedItem: Binding<Fruits?>, draggableItems: Binding<[Fruits]>, droppedFruit: Binding<[Fruits]>, destinationItem: Fruits?, destinationIsBowl: Bool = false) {
         self._selectedItem = selectedItem
         self._draggableItems = draggableItems
+        self._droppedFruit = droppedFruit
         self.destinationItem = destinationItem
+        self.destinationIsBowl = destinationIsBowl
     }
     
     func performDrop(info: DropInfo) -> Bool {
+        if destinationIsBowl, let selectedItem {
+            self.droppedFruit.append(selectedItem)
+            self.draggableItems.removeAll(where: { $0 == selectedItem })
+        }
         self.selectedItem = nil
         return false
     }
     
     func dropEntered(info: DropInfo) {
-        if let newIndex = draggableItems.firstIndex(where: { $0 == destinationItem }), let selectedItem {
+        if !destinationIsBowl, let newIndex = draggableItems.firstIndex(where: { $0 == destinationItem }), let selectedItem {
             draggableItems.removeAll(where: { $0 == selectedItem })
             draggableItems.insert(selectedItem, at: newIndex)
         }
